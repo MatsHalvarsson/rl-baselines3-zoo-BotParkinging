@@ -26,6 +26,12 @@ except ImportError:
     pass
 
 try:
+    from BotTrajectories.environment import register_envs as reg_botenvs
+except ImportError as e:
+    print("Failed to import BotParking environments!")
+    raise e
+
+try:
     import gym_donkeycar
 except ImportError:
     pass
@@ -62,3 +68,10 @@ for env_id in MaskVelocityWrapper.velocity_indices.keys():
         id=f"{name}NoVel-v{version}",
         entry_point=create_no_vel_env(env_id),  # type: ignore[arg-type]
     )
+
+try:
+    reg_botenvs()
+except NameError as e:
+    print("Failed to register BotParking environments, with error message: ", e.message, "\n Moving on...")
+    pass
+
